@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Briefing | Cultura, Princípios e Valores | Outside Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --preto: #1a1a1a;
+            --azul-marinho: #1e3a5f;
+            --bege: #d4c5b0;
+            --off-white: #f8f6f3;
+            --dourado: #c9a961;
+            --cinza-escuro: #2a2a2a;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--preto) 0%, var(--azul-marinho) 50%, var(--cinza-escuro) 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(201, 169, 97, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(30, 58, 95, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 0;
+            box-shadow: 
+                0 30px 90px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 1px rgba(201, 169, 97, 0.2);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--preto) 100%);
+            color: var(--off-white);
+            padding: 60px 50px;
+            text-align: center;
+            position: relative;
+            border-bottom: 2px solid var(--dourado);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--dourado);
+            box-shadow: 0 0 20px var(--dourado);
+        }
+
+        .logo {
+            max-width: 280px;
+            margin-bottom: 35px;
+            filter: brightness(0) invert(1);
+            opacity: 0.95;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--off-white);
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--bege);
+            margin-bottom: 10px;
+        }
+
+        .header .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--dourado);
+        }
+
+        .header .stats span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-container {
+            background: rgba(42, 42, 42, 0.8);
+            padding: 30px 50px;
+            border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+        }
+
+        .progress-label {
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--bege);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(201, 169, 97, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--dourado) 0%, var(--bege) 100%);
+            width: 0%;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px var(--dourado);
+        }
+
+        .progress-text {
+            font-size: 0.85em;
+            color: var(--dourado);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 60px 50px;
+        }
+
+        .phase {
+            display: none;
+        }
+
+        .phase.active {
+            display: block;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .phase-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+        }
+
+        .phase-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--dourado);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .phase-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5em;
+            font-weight: 300;
+            color: var(--off-white);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .phase-description {
+            font-size: 1em;
+            line-height: 1.8;
+            color: var(--bege);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .question {
+            margin-bottom: 50px;
+            padding: 35px;
+            background: rgba(42, 42, 42, 0.4);
+            border-left: 2px solid var(--dourado);
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            background: rgba(42, 42, 42, 0.6);
+            border-left-width: 3px;
+        }
+
+        .question-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85em;
+            color: var(--dourado);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            margin-bottom: 30px;
+            color: var(--off-white);
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .scale-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .scale-option {
+            flex: 1;
+            text-align: center;
+        }
+
+        .scale-option input[type="radio"] {
+            display: none;
+        }
+
+        .scale-option label {
+            display: block;
+            padding: 18px;
+            background: rgba(30, 58, 95, 0.3);
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            font-size: 1.3em;
+            color: var(--bege);
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .scale-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, var(--dourado) 0%, var(--bege) 100%);
+            color: var(--preto);
+            border-color: var(--dourado);
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(201, 169, 97, 0.4);
+            font-weight: 600;
+        }
+
+        .scale-option label:hover {
+            border-color: var(--dourado);
+            background: rgba(30, 58, 95, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 0.85em;
+            color: var(--bege);
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            background: rgba(30, 58, 95, 0.2);
+            color: var(--off-white);
+            font-size: 1em;
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--dourado);
+            background: rgba(30, 58, 95, 0.3);
+            box-shadow: 0 0 20px rgba(201, 169, 97, 0.2);
+        }
+
+        .text-input::placeholder {
+            color: var(--bege);
+            opacity: 0.5;
+        }
+
+        .text-input.long {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .helper-text {
+            font-size: 0.85em;
+            color: var(--bege);
+            margin-top: 10px;
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 18px 45px;
+            font-size: 1em;
+            border: 1px solid;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--dourado) 0%, var(--bege) 100%);
+            color: var(--preto);
+            border-color: var(--dourado);
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 169, 97, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--bege);
+            border-color: var(--bege);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 197, 176, 0.1);
+            border-color: var(--dourado);
+            color: var(--dourado);
+        }
+
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .completion {
+            text-align: center;
+            padding: 80px 40px;
+        }
+
+        .completion-icon {
+            font-size: 6em;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .completion h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3em;
+            color: var(--dourado);
+            margin-bottom: 25px;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        .completion p {
+            font-size: 1.1em;
+            line-height: 2;
+            color: var(--bege);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .completion .highlight {
+            color: var(--dourado);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 30px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .content {
+                padding: 40px 30px;
+            }
+
+            .phase-title {
+                font-size: 2em;
+            }
+
+            .scale-container {
+                flex-wrap: wrap;
+            }
+
+            .scale-option {
+                flex-basis: 18%;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .question {
+                padding: 25px;
+            }
+        }
+
+        /* Decorative elements */
+        .decorative-line {
+            width: 60px;
+            height: 1px;
+            background: var(--dourado);
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="data:image/png;base64,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" alt="Outside Home" class="logo">
+            <h1>Briefing | Cultura, Princípios e Valores</h1>
+            <p class="subtitle">Uma jornada para mapear o DNA da sua construtora</p>
+            <div class="decorative-line"></div>
+            <div class="stats">
+                <span>📊 4 Fases</span>
+                <span></span>
+                <span>⏱️ 3 Minutos</span>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-label">Progresso da Missão</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">Fase 1 de 4</div>
+        </div>
+
+        <div class="content">
+            <form id="briefingForm">
+                <!-- FASE 1: VALORES E CULTURA -->
+                <div class="phase active" data-phase="1">
+                    <div class="phase-header">
+                        <div class="phase-number">Fase I</div>
+                        <h2 class="phase-title">Valores & Cultura</h2>
+                        <div class="decorative-line"></div>
+                        <p class="phase-description">
+                            Vamos explorar os valores fundamentais que guiam sua construtora no dia a dia.
+                            Avalie cada afirmação de 1 (Discordo Totalmente) a 5 (Concordo Totalmente).
+                        </p>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 01</div>
+                        <div class="question-text">A qualidade do acabamento e a atenção aos detalhes são obsessões para nós, mesmo que isso custe mais.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="1" id="q1_1" required>
+                                <label for="q1_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="2" id="q1_2">
+                                <label for="q1_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="3" id="q1_3">
+                                <label for="q1_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="4" id="q1_4">
+                                <label for="q1_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="5" id="q1_5">
+                                <label for="q1_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 02</div>
+                        <div class="question-text">Cumprir o prazo rigorosamente é mais importante do que acomodar pequenas alterações do cliente.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="1" id="q2_1" required>
+                                <label for="q2_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="2" id="q2_2">
+                                <label for="q2_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="3" id="q2_3">
+                                <label for="q2_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="4" id="q2_4">
+                                <label for="q2_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="5" id="q2_5">
+                                <label for="q2_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 03</div>
+                        <div class="question-text">A segurança no canteiro de obras é inegociável. Paramos qualquer atividade sob a menor suspeita de risco.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="1" id="q3_1" required>
+                                <label for="q3_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="2" id="q3_2">
+                                <label for="q3_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="3" id="q3_3">
+                                <label for="q3_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="4" id="q3_4">
+                                <label for="q3_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="5" id="q3_5">
+                                <label for="q3_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 04</div>
+                        <div class="question-text">Nossos engenheiros e mestres de obras têm autonomia para tomar decisões rápidas no campo sem precisar de aprovação do escritório.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="1" id="q4_1" required>
+                                <label for="q4_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="2" id="q4_2">
+                                <label for="q4_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="3" id="q4_3">
+                                <label for="q4_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="4" id="q4_4">
+                                <label for="q4_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="5" id="q4_5">
+                                <label for="q4_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 05</div>
+                        <div class="question-text">Investimos tempo e dinheiro para experimentar novos materiais e tecnologias construtivas.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="1" id="q5_1" required>
+                                <label for="q5_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="2" id="q5_2">
+                                <label for="q5_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="3" id="q5_3">
+                                <label for="q5_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="4" id="q5_4">
+                                <label for="q5_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="5" id="q5_5">
+                                <label for="q5_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 06</div>
+                        <div class="question-text">A redução de desperdício de materiais na obra é uma meta tão importante quanto a velocidade da construção.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="1" id="q6_1" required>
+                                <label for="q6_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="2" id="q6_2">
+                                <label for="q6_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="3" id="q6_3">
+                                <label for="q6_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="4" id="q6_4">
+                                <label for="q6_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="5" id="q6_5">
+                                <label for="q6_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 07</div>
+                        <div class="question-text">Quando um erro acontece, nossa primeira reação é focar em entender o processo, não em achar um culpado.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="1" id="q7_1" required>
+                                <label for="q7_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="2" id="q7_2">
+                                <label for="q7_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="3" id="q7_3">
+                                <label for="q7_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="4" id="q7_4">
+                                <label for="q7_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="5" id="q7_5">
+                                <label for="q7_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="navigation">
+                        <button type="button" class="btn btn-primary" onclick="nextPhase()">Próxima Fase →</button>
+                    </div>
+                </div>
+
+                <!-- FASE 2: OPERAÇÕES E PROCESSOS -->
+                <div class="phase" data-phase="2">
+                    <div class="phase-header">
+                        <div class="phase-number">Fase II</div>
+                        <h2 class="phase-title">Operações & Processos</h2>
+                        <div class="decorative-line"></div>
+                        <p class="phase-description">
+                            Como sua equipe trabalha? Como os processos fluem?
+                            Vamos explorar a dinâmica operacional da sua construtora.
+                        </p>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 08</div>
+                        <div class="question-text">Nossa equipe comercial tem total liberdade para negociar e fechar uma venda rapidamente.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="1" id="q8_1" required>
+                                <label for="q8_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="2" id="q8_2">
+                                <label for="q8_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="3" id="q8_3">
+                                <label for="q8_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="4" id="q8_4">
+                                <label for="q8_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="5" id="q8_5">
+                                <label for="q8_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 09</div>
+                        <div class="question-text">Celebramos mais a entrega de uma obra no prazo do que a venda de um novo empreendimento.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="1" id="q9_1" required>
+                                <label for="q9_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="2" id="q9_2">
+                                <label for="q9_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="3" id="q9_3">
+                                <label for="q9_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="4" id="q9_4">
+                                <label for="q9_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="5" id="q9_5">
+                                <label for="q9_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 10</div>
+                        <div class="question-text">A aparência e a organização do nosso canteiro de obras são um reflexo direto da qualidade da nossa marca.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="1" id="q10_1" required>
+                                <label for="q10_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="2" id="q10_2">
+                                <label for="q10_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="3" id="q10_3">
+                                <label for="q10_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="4" id="q10_4">
+                                <label for="q10_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="5" id="q10_5">
+                                <label for="q10_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 11</div>
+                        <div class="question-text">A comunicação entre a equipe do escritório (projetos, compras) e a equipe do canteiro (obras) é fluida e sem ruídos.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="1" id="q11_1" required>
+                                <label for="q11_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="2" id="q11_2">
+                                <label for="q11_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="3" id="q11_3">
+                                <label for="q11_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="4" id="q11_4">
+                                <label for="q11_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="5" id="q11_5">
+                                <label for="q11_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 12</div>
+                        <div class="question-text">O time de Suprimentos/Compras consegue atender às demandas da obra com agilidade, sem causar atrasos.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="1" id="q12_1" required>
+                                <label for="q12_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="2" id="q12_2">
+                                <label for="q12_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="3" id="q12_3">
+                                <label for="q12_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="4" id="q12_4">
+                                <label for="q12_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="5" id="q12_5">
+                                <label for="q12_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 13</div>
+                        <div class="question-text">As responsabilidades de cada equipe (Orçamentos, Obras, Vendas) são claramente definidas e todos sabem a quem recorrer.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="1" id="q13_1" required>
+                                <label for="q13_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="2" id="q13_2">
+                                <label for="q13_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="3" id="q13_3">
+                                <label for="q13_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="4" id="q13_4">
+                                <label for="q13_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="5" id="q13_5">
+                                <label for="q13_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 14</div>
+                        <div class="question-text">Nossos líderes (engenheiros, diretores) dedicam mais tempo planejando e desenvolvendo equipes do que 'apagando incêndios'.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="1" id="q14_1" required>
+                                <label for="q14_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="2" id="q14_2">
+                                <label for="q14_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="3" id="q14_3">
+                                <label for="q14_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="4" id="q14_4">
+                                <label for="q14_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="5" id="q14_5">
+                                <label for="q14_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="navigation">
+                        <button type="button" class="btn btn-secondary" onclick="prevPhase()">← Voltar</button>
+                        <button type="button" class="btn btn-primary" onclick="nextPhase()">Próxima Fase →</button>
+                    </div>
+                </div>
+
+                <!-- FASE 3: MARCA E MERCADO -->
+                <div class="phase" data-phase="3">
+                    <div class="phase-header">
+                        <div class="phase-number">Fase III</div>
+                        <h2 class="phase-title">Marca & Mercado</h2>
+                        <div class="decorative-line"></div>
+                        <p class="phase-description">
+                            Como sua marca é percebida? Qual é a reputação no mercado?
+                            Vamos explorar o posicionamento e a identidade da sua construtora.
+                        </p>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 15</div>
+                        <div class="question-text">O processo de Pós-Obra/Assistência Técnica é eficiente e visto pelos clientes como um diferencial positivo.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="1" id="q15_1" required>
+                                <label for="q15_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="2" id="q15_2">
+                                <label for="q15_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="3" id="q15_3">
+                                <label for="q15_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="4" id="q15_4">
+                                <label for="q15_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="5" id="q15_5">
+                                <label for="q15_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 16</div>
+                        <div class="question-text">Nossa marca é percebida pelo mercado como 'premium' e de alto padrão.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="1" id="q16_1" required>
+                                <label for="q16_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="2" id="q16_2">
+                                <label for="q16_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="3" id="q16_3">
+                                <label for="q16_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="4" id="q16_4">
+                                <label for="q16_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="5" id="q16_5">
+                                <label for="q16_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 17</div>
+                        <div class="question-text">Nossa marca é mais conhecida pela confiança e segurança que transmite do que pelo design arrojado dos projetos.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="1" id="q17_1" required>
+                                <label for="q17_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="2" id="q17_2">
+                                <label for="q17_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="3" id="q17_3">
+                                <label for="q17_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="4" id="q17_4">
+                                <label for="q17_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="5" id="q17_5">
+                                <label for="q17_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 18</div>
+                        <div class="question-text">Temos um processo formal para treinar e integrar novos colaboradores na cultura da empresa.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="1" id="q18_1" required>
+                                <label for="q18_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="2" id="q18_2">
+                                <label for="q18_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="3" id="q18_3">
+                                <label for="q18_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="4" id="q18_4">
+                                <label for="q18_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="5" id="q18_5">
+                                <label for="q18_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 19</div>
+                        <div class="question-text">Promovemos ativamente o desenvolvimento de carreira e a formação de novos líderes dentro da empresa.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="1" id="q19_1" required>
+                                <label for="q19_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="2" id="q19_2">
+                                <label for="q19_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="3" id="q19_3">
+                                <label for="q19_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="4" id="q19_4">
+                                <label for="q19_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="5" id="q19_5">
+                                <label for="q19_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 20</div>
+                        <div class="question-text">Nossas decisões estratégicas são guiadas mais por dados e análises de mercado do que pela intuição dos sócios.</div>
+                        <div class="scale-container">
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="1" id="q20_1" required>
+                                <label for="q20_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="2" id="q20_2">
+                                <label for="q20_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="3" id="q20_3">
+                                <label for="q20_3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="4" id="q20_4">
+                                <label for="q20_4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="5" id="q20_5">
+                                <label for="q20_5">5</label>
+                            </div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Discordo</span>
+                            <span>Concordo</span>
+                        </div>
+                    </div>
+
+                    <div class="navigation">
+                        <button type="button" class="btn btn-secondary" onclick="prevPhase()">← Voltar</button>
+                        <button type="button" class="btn btn-primary" onclick="nextPhase()">Próxima Fase →</button>
+                    </div>
+                </div>
+
+                <!-- FASE 4: IDENTIDADE ESTRATÉGICA -->
+                <div class="phase" data-phase="4">
+                    <div class="phase-header">
+                        <div class="phase-number">Fase IV</div>
+                        <h2 class="phase-title">Identidade Estratégica</h2>
+                        <div class="decorative-line"></div>
+                        <p class="phase-description">
+                            Última fase! Vamos definir os pilares estratégicos da sua marca.
+                            Quatro perguntas abertas para capturar a essência da sua construtora.
+                        </p>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 21</div>
+                        <div class="question-text">A MISSÃO: Em uma frase, qual é o propósito fundamental da sua construtora? O que vocês fazem?</div>
+                        <textarea name="q21" class="text-input long" required placeholder="Digite sua resposta aqui..."></textarea>
+                        <div class="helper-text">Exemplo: "Construir empreendimentos que transformam a vida das pessoas com qualidade e pontualidade."</div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 22</div>
+                        <div class="question-text">A VISÃO: Onde vocês querem que a construtora esteja em 5 anos? Qual é a maior ambição?</div>
+                        <textarea name="q22" class="text-input long" required placeholder="Digite sua resposta aqui..."></textarea>
+                        <div class="helper-text">Exemplo: "Ser a construtora líder em projetos de alto padrão no nosso estado, reconhecida pela excelência."</div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 23</div>
+                        <div class="question-text">O SLOGAN DA MARCA: Qual frase curta e impactante define vocês?</div>
+                        <input type="text" name="q23" class="text-input" required placeholder="Digite sua resposta aqui...">
+                        <div class="helper-text">Exemplo: "Qualidade que se vê, confiança que se sente."</div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Questão 24</div>
+                        <div class="question-text">3 PALAVRAS-CHAVE: Se sua marca fosse resumida em 3 palavras, quais seriam?</div>
+                        <input type="text" name="q24" class="text-input" required placeholder="Digite sua resposta aqui...">
+                        <div class="helper-text">Exemplo: "Solidez, Pontualidade, Qualidade"</div>
+                    </div>
+
+                    <div class="navigation">
+                        <button type="button" class="btn btn-secondary" onclick="prevPhase()">← Voltar</button>
+                        <button type="submit" class="btn btn-primary">Finalizar Missão</button>
+                    </div>
+                </div>
+
+                <!-- TELA DE CONCLUSÃO -->
+                <div class="phase" data-phase="5">
+                    <div class="completion">
+                        <div class="completion-icon">✨</div>
+                        <h2>Missão Cumprida</h2>
+                        <div class="decorative-line"></div>
+                        <p>Você completou todas as 4 fases e desbloqueou o DNA da sua construtora.</p>
+                        <p><span class="highlight">20 Avaliações Culturais</span> • <span class="highlight">4 Pilares Estratégicos Definidos</span></p>
+                        <p>Suas respostas são a base para construirmos um Manual de Cultura e Marca que seja a cara da sua construtora.</p>
+                        <p>Nossa equipe vai analisar seus insights e retornar em breve com os primeiros rascunhos.</p>
+                        <div class="decorative-line"></div>
+                        <p style="margin-top: 40px; font-size: 1.3em; color: var(--dourado);">Obrigado por dedicar seu tempo a este briefing.</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentPhase = 1;
+        const totalPhases = 4;
+
+        function updateProgress() {
+            const progress = ((currentPhase - 1) / totalPhases) * 100;
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            progressBar.style.width = progress + '%';
+            progressText.textContent = `Fase ${currentPhase} de ${totalPhases}`;
+        }
+
+        function validatePhase(phase) {
+            const phaseElement = document.querySelector(`.phase[data-phase="${phase}"]`);
+            const inputs = phaseElement.querySelectorAll('input[required], textarea[required]');
+            
+            for (let input of inputs) {
+                if (input.type === 'radio') {
+                    const name = input.name;
+                    const checked = phaseElement.querySelector(`input[name="${name}"]:checked`);
+                    if (!checked) {
+                        alert('Por favor, responda todas as perguntas antes de continuar.');
+                        return false;
+                    }
+                } else {
+                    if (!input.value.trim()) {
+                        alert('Por favor, preencha todos os campos antes de continuar.');
+                        input.focus();
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function nextPhase() {
+            if (!validatePhase(currentPhase)) {
+                return;
+            }
+
+            document.querySelector(`.phase[data-phase="${currentPhase}"]`).classList.remove('active');
+            currentPhase++;
+            document.querySelector(`.phase[data-phase="${currentPhase}"]`).classList.add('active');
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevPhase() {
+            document.querySelector(`.phase[data-phase="${currentPhase}"]`).classList.remove('active');
+            currentPhase--;
+            document.querySelector(`.phase[data-phase="${currentPhase}"]`).classList.add('active');
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.getElementById('briefingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validatePhase(currentPhase)) {
+                return;
+            }
+
+            const formData = new FormData(this);
+            const responses = {};
+            
+            for (let [key, value] of formData.entries()) {
+                responses[key] = value;
+            }
+
+            localStorage.setItem('briefingResponses', JSON.stringify(responses));
+            localStorage.setItem('briefingDate', new Date().toISOString());
+
+            document.querySelector(`.phase[data-phase="${currentPhase}"]`).classList.remove('active');
+            currentPhase = 5;
+            document.querySelector(`.phase[data-phase="${currentPhase}"]`).classList.add('active');
+            
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            progressBar.style.width = '100%';
+            progressText.textContent = 'Missão Completa';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            console.log('Respostas coletadas:', responses);
+        });
+
+        updateProgress();
+    </script>
+</body>
+</html>
